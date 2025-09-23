@@ -37,6 +37,7 @@ function ExercisesList() {
 					{exercises?.map((exercise) => (
 						<Link
 							key={exercise.id}
+							data-random={exercise.random}
 							to="/exercises/$exerciseId"
 							params={{ exerciseId: exercise.id }}
 							className="group bg-white/10 border border-white/20 rounded-lg p-4 backdrop-blur-sm shadow-md hover:bg-white/20 transition-all duration-200 transform hover:scale-105"

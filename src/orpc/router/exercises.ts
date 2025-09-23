@@ -66,7 +66,7 @@ const exercises = [
 ] as Exercise[];
 
 export const listExercises = os.input(z.object({})).handler(() => {
-	return exercises;
+	return exercises.map((ex) => ({ ...ex, random: Math.random() }));
 });
 
 export const getExerciseById = os
