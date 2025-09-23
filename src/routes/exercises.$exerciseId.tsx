@@ -6,6 +6,13 @@ import type { Id } from "convex/_generated/dataModel";
 
 export const Route = createFileRoute("/exercises/$exerciseId")({
 	component: ExerciseDetail,
+	loader: async ({ context, params }) => {
+		await context.queryClient.ensureQueryData(
+			convexQuery(api.exercises.get, {
+				id: params.exerciseId as Id<"exercises">,
+			}),
+		);
+	},
 });
 
 function ExerciseDetail() {

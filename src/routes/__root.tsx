@@ -1,11 +1,13 @@
 import { TanstackDevtools } from "@tanstack/react-devtools";
+import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 
 import Header from "../components/Header";
 
-import { AppConvexProvider } from "../integrations/convex/provider";
+import { Providers } from "../integrations/provider";
 
+import { queryClient } from "../integrations/provider";
 import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
@@ -31,6 +33,7 @@ export const Route = createRootRoute({
 	}),
 
 	shellComponent: RootDocument,
+	context: () => ({ queryClient }),
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -40,7 +43,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<HeadContent />
 			</head>
 			<body>
-				<AppConvexProvider>
+				<Providers>
 					<Header />
 					{children}
 					<TanstackDevtools
@@ -52,9 +55,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 								name: "Tanstack Router",
 								render: <TanStackRouterDevtoolsPanel />,
 							},
+							{
+								name: "React Query",
+								render: <ReactQueryDevtoolsPanel />,
+							},
 						]}
 					/>
-				</AppConvexProvider>
+				</Providers>
 				<Scripts />
 			</body>
 		</html>

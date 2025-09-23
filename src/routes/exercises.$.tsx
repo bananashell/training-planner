@@ -5,11 +5,11 @@ import { api } from "convex/_generated/api";
 
 export const Route = createFileRoute("/exercises/$")({
 	component: ExercisesList,
-	// loader: async ({ context }) => {
-	// 	await context.queryClient.ensureQueryData(
-	// 		convexQuery(api.exercises.getAll, {}),
-	// 	);
-	// },
+	loader: async ({ context }) => {
+		await context.queryClient.ensureQueryData(
+			convexQuery(api.exercises.getAll, {}),
+		);
+	},
 });
 
 function ExercisesList() {
