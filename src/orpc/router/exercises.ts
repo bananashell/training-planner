@@ -3,7 +3,7 @@ import { os } from "@orpc/server";
 import * as z from "zod";
 
 const exerciseSchema = z.object({
-	id: z.string().uuid(),
+	id: z.string().nanoid(),
 	name: z.string(),
 	description: z.string().max(500).optional(),
 	tags: z.array(z.string()).optional().default([]),
@@ -66,7 +66,7 @@ const exercises = [
 ] as Exercise[];
 
 export const listExercises = os.input(z.object({})).handler(() => {
-	return exercises.map((ex) => ({ ...ex, random: Math.random() }));
+	return exercises;
 });
 
 export const getExerciseById = os
