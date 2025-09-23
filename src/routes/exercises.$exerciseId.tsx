@@ -1,47 +1,23 @@
-import { useQuery } from "@tanstack/react-query";
+import { convexQuery } from "@convex-dev/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-
-import { orpc } from "@/orpc/client";
+import { api } from "convex/_generated/api";
+import type { Id } from "convex/_generated/dataModel";
 
 export const Route = createFileRoute("/exercises/$exerciseId")({
 	component: ExerciseDetail,
-	loader: async ({ params, context }) => {
-		await context.queryClient.prefetchQuery(
-			orpc.getExerciseById.queryOptions({
-				input: { id: params.exerciseId },
-			}),
-		);
-	},
 });
 
 function ExerciseDetail() {
 	const { exerciseId } = Route.useParams();
 
-	const {
-		data: exercise,
-		isLoading,
-		error,
-	} = useQuery(
-		orpc.getExerciseById.queryOptions({
-			input: { id: exerciseId },
+	const { data: exercise } = useSuspenseQuery(
+		convexQuery(api.exercises.get, {
+			id: exerciseId as Id<"exercises">,
 		}),
 	);
 
-	if (isLoading) {
-		return (
-			<div
-				className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-100 to-blue-100"
-				style={{
-					backgroundImage:
-						"radial-gradient(50% 50% at 50% 50%, #D2149D 0%, #8E1066 50%, #2D0A1F 100%)",
-				}}
-			>
-				<div className="text-white text-xl">Loading exercise...</div>
-			</div>
-		);
-	}
-
-	if (error || !exercise) {
+	if (!exercise) {
 		return (
 			<div
 				className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-100 to-blue-100"

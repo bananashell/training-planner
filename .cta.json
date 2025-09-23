@@ -11,8 +11,6 @@
     "biome",
     "start",
     "convex",
-    "tanstack-query",
-    "oRPC",
     "t3env"
   ]
 }

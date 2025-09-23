@@ -1,24 +1,20 @@
-import { useQuery } from "@tanstack/react-query";
+import { convexQuery } from "@convex-dev/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, createFileRoute } from "@tanstack/react-router";
-
-import { orpc } from "@/orpc/client";
+import { api } from "convex/_generated/api";
 
 export const Route = createFileRoute("/exercises/$")({
 	component: ExercisesList,
-	loader: async ({ context }) => {
-		await context.queryClient.prefetchQuery(
-			orpc.listExercises.queryOptions({
-				input: {},
-			}),
-		);
-	},
+	// loader: async ({ context }) => {
+	// 	await context.queryClient.ensureQueryData(
+	// 		convexQuery(api.exercises.getAll, {}),
+	// 	);
+	// },
 });
 
 function ExercisesList() {
-	const { data: exercises } = useQuery(
-		orpc.listExercises.queryOptions({
-			input: {},
-		}),
+	const { data: exercises } = useSuspenseQuery(
+		convexQuery(api.exercises.getAll, {}),
 	);
 
 	return (
@@ -36,9 +32,9 @@ function ExercisesList() {
 				<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
 					{exercises?.map((exercise) => (
 						<Link
-							key={exercise.id}
+							key={exercise._id}
 							to="/exercises/$exerciseId"
-							params={{ exerciseId: exercise.id }}
+							params={{ exerciseId: exercise._id }}
 							className="group bg-white/10 border border-white/20 rounded-lg p-4 backdrop-blur-sm shadow-md hover:bg-white/20 transition-all duration-200 transform hover:scale-105"
 						>
 							{exercise.image && (
