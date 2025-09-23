@@ -13,6 +13,8 @@ import { createServerRootRoute } from '@tanstack/react-start/server'
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as Index2RouteImport } from './routes/index2'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ExercisesExerciseIdRouteImport } from './routes/exercises.$exerciseId'
+import { Route as ExercisesSplatRouteImport } from './routes/exercises.$'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo.tanstack-query'
 import { Route as DemoOrpcTodoRouteImport } from './routes/demo.orpc-todo'
 import { Route as DemoConvexRouteImport } from './routes/demo.convex'
@@ -33,6 +35,16 @@ const Index2Route = Index2RouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExercisesExerciseIdRoute = ExercisesExerciseIdRouteImport.update({
+  id: '/exercises/$exerciseId',
+  path: '/exercises/$exerciseId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExercisesSplatRoute = ExercisesSplatRouteImport.update({
+  id: '/exercises/$',
+  path: '/exercises/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
@@ -87,6 +99,8 @@ export interface FileRoutesByFullPath {
   '/demo/convex': typeof DemoConvexRoute
   '/demo/orpc-todo': typeof DemoOrpcTodoRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/exercises/$': typeof ExercisesSplatRoute
+  '/exercises/$exerciseId': typeof ExercisesExerciseIdRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
 }
@@ -96,6 +110,8 @@ export interface FileRoutesByTo {
   '/demo/convex': typeof DemoConvexRoute
   '/demo/orpc-todo': typeof DemoOrpcTodoRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/exercises/$': typeof ExercisesSplatRoute
+  '/exercises/$exerciseId': typeof ExercisesExerciseIdRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
 }
@@ -106,6 +122,8 @@ export interface FileRoutesById {
   '/demo/convex': typeof DemoConvexRoute
   '/demo/orpc-todo': typeof DemoOrpcTodoRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/exercises/$': typeof ExercisesSplatRoute
+  '/exercises/$exerciseId': typeof ExercisesExerciseIdRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
 }
@@ -117,6 +135,8 @@ export interface FileRouteTypes {
     | '/demo/convex'
     | '/demo/orpc-todo'
     | '/demo/tanstack-query'
+    | '/exercises/$'
+    | '/exercises/$exerciseId'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
   fileRoutesByTo: FileRoutesByTo
@@ -126,6 +146,8 @@ export interface FileRouteTypes {
     | '/demo/convex'
     | '/demo/orpc-todo'
     | '/demo/tanstack-query'
+    | '/exercises/$'
+    | '/exercises/$exerciseId'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
   id:
@@ -135,6 +157,8 @@ export interface FileRouteTypes {
     | '/demo/convex'
     | '/demo/orpc-todo'
     | '/demo/tanstack-query'
+    | '/exercises/$'
+    | '/exercises/$exerciseId'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
   fileRoutesById: FileRoutesById
@@ -145,6 +169,8 @@ export interface RootRouteChildren {
   DemoConvexRoute: typeof DemoConvexRoute
   DemoOrpcTodoRoute: typeof DemoOrpcTodoRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  ExercisesSplatRoute: typeof ExercisesSplatRoute
+  ExercisesExerciseIdRoute: typeof ExercisesExerciseIdRoute
   DemoStartApiRequestRoute: typeof DemoStartApiRequestRoute
   DemoStartServerFuncsRoute: typeof DemoStartServerFuncsRoute
 }
@@ -201,6 +227,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/exercises/$exerciseId': {
+      id: '/exercises/$exerciseId'
+      path: '/exercises/$exerciseId'
+      fullPath: '/exercises/$exerciseId'
+      preLoaderRoute: typeof ExercisesExerciseIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/exercises/$': {
+      id: '/exercises/$'
+      path: '/exercises/$'
+      fullPath: '/exercises/$'
+      preLoaderRoute: typeof ExercisesSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/tanstack-query': {
@@ -279,6 +319,8 @@ const rootRouteChildren: RootRouteChildren = {
   DemoConvexRoute: DemoConvexRoute,
   DemoOrpcTodoRoute: DemoOrpcTodoRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+  ExercisesSplatRoute: ExercisesSplatRoute,
+  ExercisesExerciseIdRoute: ExercisesExerciseIdRoute,
   DemoStartApiRequestRoute: DemoStartApiRequestRoute,
   DemoStartServerFuncsRoute: DemoStartServerFuncsRoute,
 }
