@@ -26,32 +26,20 @@ function ExerciseDetail() {
 
 	if (!exercise) {
 		return (
-			<div
-				className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-100 to-blue-100"
-				style={{
-					backgroundImage:
-						"radial-gradient(50% 50% at 50% 50%, #D2149D 0%, #8E1066 50%, #2D0A1F 100%)",
-				}}
-			>
+			<div className="flex items-center justify-center min-h-screen ">
 				<div className="text-white text-xl">Exercise not found</div>
 			</div>
 		);
 	}
 
 	return (
-		<div
-			className="min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 p-4"
-			style={{
-				backgroundImage:
-					"radial-gradient(50% 50% at 50% 50%, #D2149D 0%, #8E1066 50%, #2D0A1F 100%)",
-			}}
-		>
+		<div className="min-h-screen  p-4">
 			<div className="max-w-4xl mx-auto">
 				<div className="bg-black/50 backdrop-blur-md rounded-xl shadow-xl border-8 border-black/10 overflow-hidden">
 					{exercise.image && (
 						<div className="w-full h-64 md:h-80">
 							<img
-								src={exercise.image}
+								src={exercise.image.url}
 								alt={exercise.name}
 								className="w-full h-full object-cover"
 								onError={(e) => {
